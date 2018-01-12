@@ -1,8 +1,11 @@
 package es.salesianos.service;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import es.salesianos.assembler.UserAssembler;
@@ -10,6 +13,7 @@ import es.salesianos.model.User;
 import es.salesianos.repository.UserRepository;
 
 @Component
+@Profile("zaragoza")
 public class AuthorService implements Service {
 
 	@Autowired
@@ -29,6 +33,11 @@ public class AuthorService implements Service {
 		} else {
 			repository.update(user);
 		}
+	}
+
+	@Override
+	public List<User> listAllUser() {
+		return repository.listAllUsers();
 	}
 
 	public UserAssembler getAssembler() {

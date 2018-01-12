@@ -9,19 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import es.salesianos.connection.AbstractConnection;
 import es.salesianos.model.Film;
 
-@Component
 public class FilmRepository {
 
-	@Autowired
-	private AbstractConnection connection; {
+	
+	private AbstractConnection connection = new AbstractConnection() {
 
-	/*	@Override
+		@Override
 		public String getDriver() {
 			return "org.h2.Driver";
 		}
@@ -34,7 +30,7 @@ public class FilmRepository {
 		@Override
 		public String getDatabasePassword() {
 			return "";
-		}*/
+		}
 	};
 
 	private static final String jdbcUrl = "jdbc:h2:file:./src/main/resources/test;INIT=RUNSCRIPT FROM 'classpath:scripts/create.sql'";
