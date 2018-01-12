@@ -3,6 +3,7 @@ package es.salesianos.repository;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -16,6 +17,8 @@ import es.salesianos.model.User;
 @Component
 public class UserRepository {
 
+	Logger log;
+	
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 
@@ -33,10 +36,12 @@ public class UserRepository {
 
 	public Optional<User> search(User user) {
 		String sql = "SELECT * FROM USER WHERE dni = ?";
+		log.debug("ejecutando la consulta: " + sql);
 		User person = null;
 		try {
 			person = (User) jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper(User.class), user.getDni());
 		} catch (EmptyResultDataAccessException e) {
+			log.error("error",e);
 		}
 		return Optional.ofNullable(person);
 
